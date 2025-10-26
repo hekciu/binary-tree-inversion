@@ -4,10 +4,14 @@
 #include <stdio.h>
 
 
+static uint8_t nodes_index = 0;
+
+
 struct node {
     struct node* left;
     struct node* right;
     uint8_t value;
+    uint8_t index;
 };
 
 
@@ -17,6 +21,9 @@ struct node* create_node(uint8_t value) {
     output->value = value;
     output->left = NULL;
     output->right = NULL;
+    output->index = nodes_index;
+
+    nodes_index++;
 
     return output;
 }
@@ -38,17 +45,24 @@ struct node* create_tree() {
 }
 
 
-void _print_nodes(struct node* node, uint32_t depth) {
-    printf("%d: %d\n", depth, node->value);
+void _print_nodes(struct node* node) {
+    printf("index: %d ", node->index);
+    printf("value: %d ", node->value);
 
-    if (node->left != NULL) _print_nodes(node->left, depth + 1);
+    if (node->left != NULL) printf("left: %d ", node->left->value);
 
-    if (node->right != NULL) _print_nodes(node->right, depth + 1);
+    if (node->right != NULL) printf("right: %d ", node->right->value);
+
+    printf("\n");
+
+    if (node->left != NULL) _print_nodes(node->left);
+
+    if (node->right != NULL) _print_nodes(node->right);
 }
 
 
 void print_tree(struct node* root) {
-    _print_nodes(root, 0);
+    _print_nodes(root);
 }
 
 
