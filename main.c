@@ -45,6 +45,15 @@ struct node* create_tree() {
 }
 
 
+void free_tree(struct node* node) {
+    if (node->left != NULL) free_tree(node->left);
+
+    if (node->right != NULL) free_tree(node->right);
+
+    free(node);
+}
+
+
 void _print_nodes(struct node* node) {
     printf("index: %d ", node->index);
     printf("value: %d ", node->value);
@@ -90,6 +99,8 @@ int main(void) {
 
     printf("inverted:\n");
     print_tree(root);
+
+    free_tree(root);
 
     return 0;
 }
